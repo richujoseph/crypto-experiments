@@ -1,117 +1,104 @@
-# 🔐 crypto-experiments
+# 🔐 Crypto Experiments
 
-A comprehensive collection of **S5 Cryptography Lab Experiments** implemented in **Java** and **C**, demonstrating both classical and modern cryptographic algorithms.
+A comprehensive educational collection of cryptographic algorithms and techniques implemented in Java and C. This project demonstrates practical implementations of classical and modern cryptography, providing hands-on experience with encryption, decryption, hashing, digital signatures, and key exchange protocols.
 
-These experiments cover encryption, decryption, hashing, and digital signature techniques — providing a practical understanding of core cryptography concepts.
+## Overview
 
----
+This repository serves as a practical resource for understanding core cryptographic concepts through implementation. Each program illustrates fundamental principles in cryptography, from classical ciphers to modern encryption standards and public-key infrastructure.
 
-## 🧩 Experiments Included
+## Technologies & Algorithms
 
-| File Name | Description |
-|-----------|-------------|
-| `AesEncryption.java` | Demonstrates AES (Advanced Encryption Standard) encryption and decryption |
-| `DES.java` | Implementation of the DES (Data Encryption Standard) symmetric cipher |
-| `RsaEncryption.java` | RSA public-key encryption and decryption example |
-| `SubstitutionCipher.java` | Classical substitution cipher implementation |
-| `ceaser.c` | Caesar Cipher implementation in C |
-| `df.java` | Diffie–Hellman key exchange algorithm (secure key sharing) |
-| `ds.java` | Digital Signature (DSA) implementation for message authentication |
-| `hashxor.java` | Simple XOR-based hashing demonstration |
-| `rc4.java` | RC4 stream cipher implementation |
+### Symmetric Encryption
+- **AES (Advanced Encryption Standard)** - Modern symmetric encryption standard with configurable key sizes
+- **DES (Data Encryption Standard)** - Classic symmetric cipher demonstrating block cipher principles
+- **RC4** - Stream cipher implementation for educational purposes
 
----
+### Asymmetric Encryption
+- **RSA** - Public-key cryptography system for secure communication and digital signatures
 
-## ⚙️ Requirements
+### Key Exchange
+- **Diffie–Hellman** - Secure key exchange protocol enabling two parties to establish shared secrets over untrusted channels
 
-- **Java JDK 8 or above**
-- **GCC compiler** (for `ceaser.c`)
-- Basic understanding of encryption and decryption principles
+### Classical Ciphers
+- **Caesar Cipher** - Historical substitution cipher demonstrating basic encryption principles
+- **Substitution Cipher** - General substitution cipher implementation
 
----
+### Hashing & Authentication
+- **Digital Signatures (DSA)** - Message authentication and non-repudiation techniques
+- **XOR Hashing** - Fundamental hashing demonstration
 
-## 🚀 How to Run
+## Getting Started
 
-### ▶️ For Java Programs
+### Prerequisites
+- Java JDK 8 or higher
+- GCC compiler (for C programs)
+- Basic familiarity with cryptographic concepts
 
+### Installation & Execution
+
+**Java Programs:**
 ```bash
-# Compile the Java file
+# Compile
 javac FileName.java
 
-# Run the compiled program
+# Run
 java FileName
 ```
 
-**Example:**
+Example:
 ```bash
 javac AesEncryption.java
 java AesEncryption
 ```
 
-### 💻 For C Program
-
+**C Programs:**
 ```bash
-# Compile the C file
-gcc ceaser.c -o ceaser
+# Compile
+gcc filename.c -o filename
 
-# Run the executable
+# Run
+./filename
+```
+
+Example:
+```bash
+gcc ceaser.c -o ceaser
 ./ceaser
 ```
 
----
+## Learning Outcomes
 
-## 🎯 Learning Outcomes
+Upon exploring this repository, you will gain understanding of:
+- Fundamental differences between symmetric and asymmetric cryptography
+- How modern encryption standards (AES, DES) function at a practical level
+- Public-key cryptography principles and RSA implementation
+- Stream cipher mechanics through RC4 examples
+- Secure key exchange protocols via Diffie–Hellman
+- Digital signature generation and verification for message authentication
+- The evolution of cryptography from classical ciphers to contemporary standards
 
-- ✅ Understand key differences between **symmetric** and **asymmetric cryptography**
-- ✅ Learn the working of **AES, DES, RSA, RC4**, and **Caesar Cipher**
-- ✅ Explore **hashing, digital signatures**, and **Diffie–Hellman key exchange**
-- ✅ Gain hands-on experience in implementing cryptographic algorithms using **Java** and **C**
+## Use Cases
 
----
+This project is ideal for:
+- Students learning cryptography fundamentals in academic courses
+- Developers seeking hands-on understanding of encryption algorithms
+- Security professionals studying algorithm implementations
+- Educational demonstrations and learning labs
 
-## 📂 Repository Structure
+## Contributing
 
-```
-crypto-experiments/
-│
-├── AesEncryption.java
-├── DES.java
-├── RsaEncryption.java
-├── SubstitutionCipher.java
-├── ceaser.c
-├── df.java
-├── ds.java
-├── hashxor.java
-├── rc4.java
-└── README.md
-```
----
+Contributions are welcome! If you have suggestions for improvements, additional algorithms, or optimizations, please feel free to open an issue or submit a pull request.
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!  
-Feel free to check the [issues page](../../issues) if you want to contribute.
-
----
-
-## 📝 License
+## License
 
 This project is created for educational purposes as part of academic coursework.
 
----
+## Support
 
-## ⭐ Show Your Support
-
-If you found this repository useful, don't forget to **star** ⭐ it!
+For questions, suggestions, or feedback, please reach out through GitHub or open an issue in the repository.
 
 ---
 
-## 📬 Contact
-
-For any queries or suggestions, feel free to reach out:
-
-- **GitHub:** [@richujoseph](https://github.com/richujoseph)
-
----
+⭐ If you find this resource helpful for your learning, please consider starring the repository!
 
 **Happy Learning! 🚀🔒**
