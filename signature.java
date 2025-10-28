@@ -1,48 +1,39 @@
 import java.security.*;
 import java.util.Base64;
 
-public class DigitalSignatureDemo {
-
-    private static final String ALGORITHM = "SHA256withRSA";
-    private static final int KEY_SIZE = 2048;
-
+public class SimpleDigitalSignature {
     public static void main(String[] args) {
         try {
-            KeyPair keyPair = generateKeyPair();
-            PublicKey publicKey = keyPair.getPublic();
-            PrivateKey privateKey = keyPair.getPrivate();
+            // 1️⃣ Generate key pair (Public + Private)
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+            keyGen.initialize(2048);
+            KeyPair pair = keyGen.generateKeyPair();
 
-            String originalMessage = "This is a secret message to be digitally signed.";
-            System.out.println("Original Message: " + originalMessage);
+            PublicKey pubKey = pair.getPublic();
+            PrivateKey privKey = pair.getPrivate();
 
-            byte[] signatureBytes = signMessage(originalMessage.getBytes(), privateKey);
-            String signatureBase64 = Base64.getEncoder().encodeToString(signatureBytes);
-            System.out.println("Digital Signature (Base64): " + signatureBase64);
+            // 2️⃣ Original message
+            String message = "Hello, this is a digital signature demo!";
+            System.out.println("Original Message: " + message);
 
-            boolean verified = verifySignature(originalMessage.getBytes(), signatureBytes, publicKey);
-            System.out.println("Signature Verified: " + verified);
+            // 3️⃣ Sign the message
+            Signature sign = Signature.getInstance("SHA256withRSA");
+            sign.initSign(privKey);
+            sign.update(message.getBytes());
+            byte[] signature = sign.sign();
+
+            String signBase64 = Base64.getEncoder().encodeToString(signature);
+            System.out.println("Signature: " + signBase64);
+
+            // 4️⃣ Verify the signature
+            Signature verifySign = Signature.getInstance("SHA256withRSA");
+            verifySign.initVerify(pubKey);
+            verifySign.update(message.getBytes());
+            boolean result = verifySign.verify(signature);
+
+            System.out.println("Signature Verified: " + result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(KEY_SIZE);
-        return keyPairGenerator.generateKeyPair();
-    }
-
-    private static byte[] signMessage(byte[] data, PrivateKey privateKey) throws Exception {
-        Signature signature = Signature.getInstance(ALGORITHM);
-        signature.initSign(privateKey);
-        signature.update(data);
-        return signature.sign();
-    }
-
-    private static boolean verifySignature(byte[] data, byte[] digitalSignature, PublicKey publicKey) throws Exception {
-        Signature signature = Signature.getInstance(ALGORITHM);
-        signature.initVerify(publicKey);
-        signature.update(data);
-        return signature.verify(digitalSignature);
     }
 }
