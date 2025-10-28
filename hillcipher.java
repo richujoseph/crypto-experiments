@@ -1,102 +1,59 @@
-,package hill_cipher;
-import java.util.*;
+import java.util.Scanner;
 
-public class hill {
-	public static int determinant(int matrix[][]) {
-		return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
-	}
-	
-	public static int modInverse(int a) {
-		a = a % 26;
-		for(int i=1;i<26;i++){
-			if ((a*i)%26 == 1){
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	public static int[][] adjointMatrix(int matrix[][]) {
-		int[][] adjoint = new int[2][2];
-		adjoint[0][0]=matrix[1][1];
-		adjoint[1][1]=matrix[0][0];
-		adjoint[0][1]=-matrix[0][1];
-		adjoint[1][0]=-matrix[1][0];
-		return adjoint;
-	}
-	
-	public static int[][] inverseMatrix(int matrix[][]) {
-		int det = determinant(matrix);
-		int detInverse = modInverse(det);
-		int[][] inverse = new int[2][2];
-		if (detInverse == -1){
-			System.out.println("Inverse doesn't exist\n");
-		}
-		int[][] adjoint = adjointMatrix(matrix);
-		
-		for (int i=0;i<2;i++){
-			for(int j=0;j<2;j++){
-				inverse[i][j] = (adjoint[i][j] * detInverse) %26;
-				if(inverse[i][j] < 0){
-					inverse[i][j] += 26;
-				}
-			}
-		}
-		return inverse;
-	}
-	
-	public static String encrypt(String plaintext, int key[][]) {
-		StringBuilder ciphertext = new StringBuilder();
-		int len = plaintext.length();
-		for (int i=0; i<len; i+=2) {
-			int p1 = plaintext.charAt(i) - 'A';
-			if (p1<0) {
-					p1 = (p1*-1);
-			}
-			int p2 = plaintext.charAt(i+1) - 'A';
-			if (p2<0) {
-				p2 = (p2*-1);
-			}
-			
-			int c1 = (p1*key[0][0] + p2*key[0][1]) % 26;
-			int c2 = (p1*key[1][0] + p2*key[1][1]) % 26;
-			
-			ciphertext.append((char)(c1 + 'A'));
-			ciphertext.append((char)(c2 + 'A'));
-		}
-		return ciphertext.toString();
-		
-	}
-	
-	public static String decrypt(String ciphertext, int key[][]) {
-		StringBuilder decryptedText = new StringBuilder();
-		int len = ciphertext.length();
-		int inverseKey[][] = inverseMatrix(key);
-		for (int i=0; i<len; i+=2) {
-			int c1 = ciphertext.charAt(i) - 'A';
-			int c2 = ciphertext.charAt(i+1) - 'A';
-			
-			int p1 = (c1*inverseKey[0][0] + c2*inverseKey[0][1]) % 26;
-			int p2 = (c1*inverseKey[1][0] + c2*inverseKey[1][1]) % 26;
-			
-			decryptedText.append((char)(p1 + 'A'));
-			decryptedText.append((char)(p2 + 'A'));
-		}
-		return decryptedText.toString();
-	}
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int[][] key = {{3,3}, {2,5}};
-		System.out.print("Enter plaintext: ");
-		String plaintext = sc.nextLine().toUpperCase();
-		if (plaintext.length() % 2 != 0) {
-			plaintext += "X";
-		}
-		
-		String encryptedText = encrypt(plaintext, key);
-		System.out.println("Encrypted Text: "+encryptedText);
-		String decryptedText = decrypt(encryptedText, key);
-		System.out.println("\nDecrypted Text: " + decryptedText);
-	}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Your Password: ");
+        String password = sc.nextLine().toUpperCase().replaceAll("\\s","");
+        if(password.length()%2!=0){
+            password += "X";
+        }
+       int [][] K= new int[2][2];
+        System.out.println("Enter the key matrix: ");
+        for(int i=0;i<2;i++){
+            for(int j=0;j<2;j++){
+                K[i][j]=sc.nextInt();
+            }
+        }
+        StringBuilder sb= new StringBuilder();
+        for(int i=0;i<password.length();i+=2){
+            int p1=password.charAt(i)-65,p2=password.charAt(i+1)-65;
+            int c1=mod26(K[0][0]*p1+K[0][1]*p2);
+            int c2=mod26(K[1][0]*p1+K[1][1]*p2);
+            sb.append((char)(c1+65)).append((char)(c2+65));
+        }
+        String cipher=sb.toString();
+        System.out.println(cipher);
+
+        int det = mod26(K[0][0]*K[1][1]-K[1][0]*K[0][1]);
+        int invDet = mulInverse(det,26);
+        if(invDet==-1){
+            System.out.println("Invalid Input");
+            return;
+        }
+        int a =K[0][0],b=K[0][1],c=K[1][0],d=K[1][1];
+        int[][] invK = {
+                {mod26(d*invDet), mod26(-b*invDet)},
+                {mod26(-c*invDet), mod26(a*invDet)},
+        };
+        StringBuilder sb1= new StringBuilder();
+        for (int i=0;i<cipher.length();i+=2){
+            int c1=cipher.charAt(i)-65,c2=cipher.charAt(i+1)-65;
+            int p1=mod26(invK[0][0]*c1+invK[0][1]*c2);
+            int p2=mod26(invK[1][0]*c1+invK[1][1]*c2);
+            sb1.append((char) (p1+65)).append((char)(p2+65));
+        }
+        System.out.println(sb1.toString());
+        }
+    static int mod26(int x){
+        return ((x %26)+26)%26;
+    }
+    static int mulInverse(int a,int b){
+        a = mod26(a);
+        for(int k=0;k<b;k++){
+            if((a * k)%b==1)
+                return k;
+        }
+        return -1;
+    }
 }
