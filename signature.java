@@ -4,7 +4,7 @@ import java.util.Base64;
 public class SimpleDigitalSignature {
     public static void main(String[] args) {
         try {
-            // 1️⃣ Generate key pair (Public + Private)
+            
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(2048);
             KeyPair pair = keyGen.generateKeyPair();
@@ -12,11 +12,11 @@ public class SimpleDigitalSignature {
             PublicKey pubKey = pair.getPublic();
             PrivateKey privKey = pair.getPrivate();
 
-            // 2️⃣ Original message
+            
             String message = "Hello, this is a digital signature demo!";
             System.out.println("Original Message: " + message);
 
-            // 3️⃣ Sign the message
+           
             Signature sign = Signature.getInstance("SHA256withRSA");
             sign.initSign(privKey);
             sign.update(message.getBytes());
@@ -25,7 +25,7 @@ public class SimpleDigitalSignature {
             String signBase64 = Base64.getEncoder().encodeToString(signature);
             System.out.println("Signature: " + signBase64);
 
-            // 4️⃣ Verify the signature
+            
             Signature verifySign = Signature.getInstance("SHA256withRSA");
             verifySign.initVerify(pubKey);
             verifySign.update(message.getBytes());
